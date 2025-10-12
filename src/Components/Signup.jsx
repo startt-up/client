@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import axios from "axios";
 const Signup = () => {
   // Define the data for each form step
   const data = [
@@ -79,6 +79,13 @@ const Signup = () => {
   // Handler for form submission (Next/Go to Dashboard)
   const handleSubmit = (e) => {
     e.preventDefault();
+
+   axios.post("api/student/register",formData)
+   .then((res)=>{console.log(res.data)
+   }).catch((err)=>{
+    console.log(err)
+   })
+
     if (index === totalSteps - 1) {
       console.log("Form submitted with data:", formData);
       // In a real app, you would send data to an API here.
