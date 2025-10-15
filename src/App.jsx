@@ -7,13 +7,10 @@ const App = () => {
   return (
     <>
     <Navbar />
-<<<<<<< HEAD
-    <Signup />
+    {/* <Signup /> */}
     {/* <LandingPage/> */}
-=======
     {/* <Signup /> */}
     <LandingPage/>
->>>>>>> 30bf78dc2813027fa6cc95a964395abb2399267a
     </>
   )
 }

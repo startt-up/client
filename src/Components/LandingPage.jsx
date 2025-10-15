@@ -4,14 +4,10 @@ import { Users, Presentation, MessageCircle } from "lucide-react";
 import { Award, Star } from "lucide-react";
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-<<<<<<< HEAD
+
 import img3 from "../assets/section1.png";
 import icon1 from "../assets/icon1.png";
 import icon2 from "../assets/icon2.png";
-
-=======
->>>>>>> 30bf78dc2813027fa6cc95a964395abb2399267a
-
 const features = [
   {
     title: "For Student",
@@ -67,7 +63,7 @@ const LandingPage = () => {
 
   return (
     <>
-<<<<<<< HEAD
+
    <section className="w-full h-[700px] flex relative overflow-hidden flex-row">
   <div className="w-[68%] text-4xl lg:text-7xl p-20">
     <img src={icon2} className="absolute w-[60px] left-[800px] top-[50px] h-[60px]" alt="iconimg" />
@@ -84,13 +80,6 @@ const LandingPage = () => {
   </div>
 </section>
 
-
-
-
-   
-=======
-   (
->>>>>>> 30bf78dc2813027fa6cc95a964395abb2399267a
     <section className="relative bg-[#F3F6FF] py-16 px-4 sm:px-8 overflow-hidden">
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-14">
         
