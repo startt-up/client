@@ -7,8 +7,8 @@ const App = () => {
   return (
     <>
     <Navbar />
-    {/* <Signup /> */}
-    <LandingPage/>
+    <Signup />
+    {/* <LandingPage/> */}
     </>
   )
 }
