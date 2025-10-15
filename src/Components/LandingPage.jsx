@@ -4,13 +4,6 @@ import { Users, Presentation, MessageCircle } from "lucide-react";
 import { Award, Star } from "lucide-react";
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-<<<<<<< HEAD
-import img3 from "../assets/section1.png";
-import icon1 from "../assets/icon1.png";
-import icon2 from "../assets/icon2.png";
-
-=======
->>>>>>> 30bf78dc2813027fa6cc95a964395abb2399267a
 
 const features = [
   {
@@ -67,30 +60,7 @@ const LandingPage = () => {
 
   return (
     <>
-<<<<<<< HEAD
-   <section className="w-full h-[700px] flex relative overflow-hidden flex-row">
-  <div className="w-[68%] text-4xl lg:text-7xl p-20">
-    <img src={icon2} className="absolute w-[60px] left-[800px] top-[50px] h-[60px]" alt="iconimg" />
-    <p className=" font-['Montserrat'] font-bold">Connecting <span className="text-[#7638E8]">Students</span> and <span className="text-[#7638E8]">Mentors</span> for real time collaborative Learning <span><img className="inline-block w-[75px] h-[75px]" src={icon1} alt="iconimg" /></span></p>
-    <p className="text-[1rem] mt-10 lg:text-[1.4rem]">
-“Join a vibrant network where students, mentors, and admins connect in real-time groups and private chats. Collaborate, exchange knowledge, and build meaningful connections that inspire growth.”
-</p>
-<button className="bg-[#7638E8] text-[1rem] lg:text-[1.4rem] text-white p-3 rounded-lg">Get Started ></button>
-  </div>
-  <div className="w-[50%] relative flex justify-center items-center">
-    <div className="absolute w-[750px] h-[750px] -top-[80px] right-[-160px] border-[12px] rounded-full border-[#7638E8] flex justify-center items-center">
-      <img className="w-[80%] h-[80%] mr-20" alt="section1Img" src={img3} />
-    </div>
-  </div>
-</section>
-
-
-
-
-   
-=======
    (
->>>>>>> 30bf78dc2813027fa6cc95a964395abb2399267a
     <section className="relative bg-[#F3F6FF] py-16 px-4 sm:px-8 overflow-hidden">
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-14">
         
