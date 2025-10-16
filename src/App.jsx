@@ -8,6 +8,8 @@ const App = () => {
     <>
     <Navbar />
     {/* <Signup /> */}
+    {/* <LandingPage/> */}
+    {/* <Signup /> */}
     <LandingPage/>
     </>
   )
