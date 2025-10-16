@@ -71,7 +71,7 @@ const LandingPage = () => {
     <p className="text-[1rem] mt-10 lg:text-[1.4rem]">
 “Join a vibrant network where students, mentors, and admins connect in real-time groups and private chats. Collaborate, exchange knowledge, and build meaningful connections that inspire growth.”
 </p>
-<button className="bg-[#7638E8] text-[1rem] lg:text-[1.4rem] text-white p-3 rounded-lg">Get Started ></button>
+<button className="bg-[#7638E8] text-[1rem] lg:text-[1.4rem] text-white p-3 rounded-lg">Get Started</button>
   </div>
   <div className="w-[50%] relative flex justify-center items-center">
     <div className="absolute w-[750px] h-[750px] -top-[80px] right-[-160px] border-[12px] rounded-full border-[#7638E8] flex justify-center items-center">
