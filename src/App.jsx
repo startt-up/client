@@ -7,7 +7,7 @@ const App = () => {
   return (
     <>
     <Navbar />
-    {/* <Signup /> */}
+    <Signup />
     {/* <LandingPage/> */}
     {/* <Signup /> */}
     <LandingPage/>

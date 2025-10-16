@@ -64,9 +64,7 @@ const Signup = () => {
   // State to hold the form data
   const [formData, setFormData] = useState({
     email: "",
-    email1: "",
     password: "",
-    confirm_password: "",
     university: "",
     course: ""
   });
