@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'; // for navigation
 
 const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate(); // navigation hook
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -11,6 +13,17 @@ const AuthPage = () => {
   // Redirect to role page on Sign Up
   const handleSignUpTab = () => {
     navigate('/role');
+  };
+
+  // Check if Login button should be disabled
+  const isLoginDisabled = email.trim() === '' || password.trim() === '';
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!isLoginDisabled) {
+      console.log('Login submitted:', { email, password });
+      // handle login logic here
+    }
   };
 
   return (
@@ -37,13 +50,15 @@ const AuthPage = () => {
         <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-6">Mentor Login</h2>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleLogin}>
           {/* Email */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">Email</label>
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             />
           </div>
@@ -54,6 +69,8 @@ const AuthPage = () => {
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             />
             <button
@@ -77,7 +94,11 @@ const AuthPage = () => {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full py-2 mt-4 bg-gradient-to-r from-indigo-500 to-indigo-400 text-white rounded-lg font-semibold hover:from-indigo-600 hover:to-indigo-500 transition"
+            disabled={isLoginDisabled}
+            className={`w-full py-2 mt-4 text-white rounded-lg font-semibold transition
+              ${isLoginDisabled
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-indigo-500 to-indigo-400 hover:from-indigo-600 hover:to-indigo-500'}`}
           >
             Login
           </button>
