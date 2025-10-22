@@ -5,6 +5,7 @@ import Signup from "./Components/Signup";
 import LandingPage from "./Components/LandingPage";
 import Role from "./Components/role";
 import Login from "./Components/Login";
+import MentorSignup from "./Components/MentorSignup";
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
         <Route path="/role" element={<Role />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/mentor-signup" element={<LandingPage />} />
+        <Route path="/mentorsignup" element={<MentorSignup />} />
       </Routes>
     </>
   );
