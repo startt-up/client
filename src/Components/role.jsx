@@ -35,7 +35,7 @@ const Role = () => {
 
           {/* Mentor Card */}
           <div
-            onClick={() => navigate("/mentor-signup")}
+            onClick={() => navigate("/mentorsignup")}
             className="cursor-pointer bg-purple-50 hover:bg-purple-100 transition-all duration-200 rounded-2xl shadow-md px-10 py-8 flex flex-col items-center text-center w-72"
           >
             <img src={mentorIcon} alt="Mentor Icon" className="h-16 w-16 mb-4" />
