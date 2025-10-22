@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom'; // for navigation
+import { useNavigate } from 'react-router-dom';
 
-const AuthPage = () => {
+const StudentLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // navigation hook
+  const navigate = useNavigate();
 
   const togglePassword = () => setShowPassword(!showPassword);
 
-  // Redirect to role page on Sign Up
   const handleSignUpTab = () => {
-    navigate('/role');
+    navigate('/student-signup'); // navigate to student sign-up page
   };
 
-  // Check if Login button should be disabled
   const isLoginDisabled = email.trim() === '' || password.trim() === '';
 
   const handleLogin = async (e) => {
     e.preventDefault();
-   try {
+     try {
     const response = await axios.post("http://localhost:5000/api/mentor/login", {
       email,
       password,
@@ -44,7 +42,7 @@ const AuthPage = () => {
             Login
           </button>
           <button
-            onClick={handleSignUpTab} // redirect on click
+            onClick={handleSignUpTab}
             className="flex-1 text-center py-2 rounded-full font-medium transition-colors duration-300
                        text-gray-600 hover:bg-gray-200"
           >
@@ -52,16 +50,16 @@ const AuthPage = () => {
           </button>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-6">Mentor Login</h2>
+        <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-6">Student Login</h2>
 
         {/* Form */}
         <form className="space-y-4" onSubmit={handleLogin}>
           {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Email</label>
+            <label className="block text-gray-700 font-medium mb-1">Student Email</label>
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Enter your student email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
@@ -131,4 +129,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default StudentLogin;
