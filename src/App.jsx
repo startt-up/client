@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Signup from "./Components/Signup";
 import LandingPage from "./Components/LandingPage";
-import Role from "./Components/role";
+import Role from "./Components/Role";
 import Login from "./Components/Login";
 import MentorSignup from "./Components/MentorSignup";
 import StudentLogin from "./Components/StudentLogin";
