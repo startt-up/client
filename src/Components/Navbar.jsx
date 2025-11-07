@@ -14,7 +14,8 @@ const Navbar = () => {
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Features", href: "/#features" },
-    { label: "Community", href: "/chatroom" },
+    // Hash route so it works on Vercel static hosting
+    { label: "Community", href: "/#/chatroom" },
     { label: "About", href: "/#about" },
     { label: "Contact", href: "/contact" },
   ];

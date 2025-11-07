@@ -115,6 +115,7 @@ const Chatroom = () => {
   const fileImageInputRef = useRef(null);
   const fileDocInputRef = useRef(null);
   const [pendingAttachment, setPendingAttachment] = useState(null);
+  const objectUrlsRef = useRef(new Set());
 
   useEffect(() => {
     if (messageEndRef.current) {
@@ -140,7 +141,10 @@ const Chatroom = () => {
     ]);
     setInput("");
     setIsEmojiOpen(false);
-    if (pendingAttachment) setPendingAttachment(null);
+    if (pendingAttachment) {
+      // Keep message blob alive for current session; revoke only pending preview
+      setPendingAttachment(null);
+    }
   };
 
   const handleAttachClick = () => {
@@ -150,8 +154,14 @@ const Chatroom = () => {
   const handleFileSelected = (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
+    // Revoke previous pending blob URL if any
+    if (pendingAttachment && pendingAttachment.url && pendingAttachment.url.startsWith("blob:")) {
+      try { URL.revokeObjectURL(pendingAttachment.url); } catch {}
+      objectUrlsRef.current.delete(pendingAttachment.url);
+    }
     const isImage = file.type.startsWith("image/");
     const objectUrl = URL.createObjectURL(file);
+    objectUrlsRef.current.add(objectUrl);
     const attachment = isImage
       ? { type: "image", url: objectUrl, title: file.name, size: `${(file.size / 1024 / 1024).toFixed(2)} MB` }
       : { type: "file", url: objectUrl, title: file.name, size: `${(file.size / 1024 / 1024).toFixed(2)} MB` };
@@ -186,6 +196,21 @@ const Chatroom = () => {
     // naive filter: show all since we don't map names; keep UX by returning list
     return list.filter(() => true);
   }, [emojiTab, emojiQuery, EMOJI_CATEGORIES]);
+
+  // Cleanup all created object URLs on unmount
+  useEffect(() => {
+    return () => {
+      try {
+        if (pendingAttachment && pendingAttachment.url && pendingAttachment.url.startsWith("blob:")) {
+          URL.revokeObjectURL(pendingAttachment.url);
+        }
+        objectUrlsRef.current.forEach((url) => {
+          try { URL.revokeObjectURL(url); } catch {}
+        });
+        objectUrlsRef.current.clear();
+      } catch {}
+    };
+  }, []);
 
   const badgeColor = useMemo(
     () => ({
@@ -527,7 +552,17 @@ const Chatroom = () => {
                         <div className="truncate font-semibold text-slate-100">{pendingAttachment.title}</div>
                         <div className="text-[11px] text-slate-300/80">{pendingAttachment.size}</div>
                       </div>
-                      <button type="button" className="rounded-md bg-slate-800/70 px-2 py-1 text-[11px] hover:bg-slate-700/80" onClick={() => setPendingAttachment(null)}>Remove</button>
+                      <button
+                        type="button"
+                        className="rounded-md bg-slate-800/70 px-2 py-1 text-[11px] hover:bg-slate-700/80"
+                        onClick={() => {
+                          if (pendingAttachment && pendingAttachment.url && pendingAttachment.url.startsWith('blob:')) {
+                            try { URL.revokeObjectURL(pendingAttachment.url); } catch {}
+                            objectUrlsRef.current.delete(pendingAttachment.url);
+                          }
+                          setPendingAttachment(null);
+                        }}
+                      >Remove</button>
                     </div>
                   ) : (
                     <div className="flex items-center justify-between gap-3">
@@ -535,7 +570,17 @@ const Chatroom = () => {
                         <div className="truncate font-semibold text-slate-100">{pendingAttachment.title}</div>
                         <div className="text-[11px] text-slate-300/80">{pendingAttachment.size}</div>
                       </div>
-                      <button type="button" className="rounded-md bg-slate-800/70 px-2 py-1 text-[11px] hover:bg-slate-700/80" onClick={() => setPendingAttachment(null)}>Remove</button>
+                      <button
+                        type="button"
+                        className="rounded-md bg-slate-800/70 px-2 py-1 text-[11px] hover:bg-slate-700/80"
+                        onClick={() => {
+                          if (pendingAttachment && pendingAttachment.url && pendingAttachment.url.startsWith('blob:')) {
+                            try { URL.revokeObjectURL(pendingAttachment.url); } catch {}
+                            objectUrlsRef.current.delete(pendingAttachment.url);
+                          }
+                          setPendingAttachment(null);
+                        }}
+                      >Remove</button>
                     </div>
                   )}
                 </div>
