@@ -14,7 +14,7 @@ const Navbar = () => {
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Features", href: "/#features" },
-    { label: "Community", href: "/#mentors" },
+    { label: "Community", href: "/chatroom" },
     { label: "About", href: "/#about" },
     { label: "Contact", href: "/contact" },
   ];
