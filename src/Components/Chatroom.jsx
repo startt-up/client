@@ -233,14 +233,14 @@ const Chatroom = () => {
   const canCreateGroup = userRole === "mentor" || userRole === "admin";
 
   return (
-    <div className={`relative min-h-screen ${theme.rootBg}`}>
+    <div className={`relative h-screen overflow-hidden ${theme.rootBg}`}>
       <div className="pointer-events-none absolute inset-0">
         <div className={`absolute -top-32 -left-32 h-72 w-72 rounded-full ${theme.blob1} blur-3xl`} />
         <div className={`absolute bottom-0 right-0 h-80 w-80 rounded-full ${theme.blob2} blur-3xl`} />
       </div>
 
       {/* Mobile header with sidebar toggles */}
-      <div className="mx-auto w-full max-w-7xl px-4 pt-4 lg:px-8 xl:hidden">
+      <div className="mx-auto w-full max-w-none px-4 pt-4 lg:px-8 xl:hidden">
         <div className="mb-2 flex items-center justify-between">
           <button
             aria-label="Open communities"
@@ -278,7 +278,7 @@ const Chatroom = () => {
         </div>
       </div>
 
-      <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-4 py-6 lg:px-8 lg:py-10 xl:flex-row">
+      <div className="relative mx-auto flex h-full w-full max-w-none flex-col gap-4 px-4 py-4 lg:px-6 lg:py-6 xl:flex-row">
         {/* Left column */}
         {/* Overlay + Drawer (mobile) */}
         {isLeftOpen && (
@@ -295,7 +295,7 @@ const Chatroom = () => {
           transition={{ duration: 0.45 }}
           className={`flex w-full flex-col rounded-3xl ${theme.panelBg} backdrop-blur-xl p-6 shadow-2xl ring-1 ${theme.ring} xl:w-72 ${
             isLeftOpen ? "fixed inset-y-4 left-4 right-4 z-50 xl:static" : ""
-          } xl:static`}
+          } xl:static max-h-full overflow-y-auto`}
           role="complementary"
           aria-label="Communities"
         >
@@ -358,7 +358,7 @@ const Chatroom = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className={`flex min-h-[70vh] flex-1 flex-col rounded-3xl ${theme.panelBg} backdrop-blur-2xl shadow-2xl ring-1 ${theme.ring}`}
+          className={`flex h-full flex-1 flex-col rounded-3xl ${theme.panelBg} backdrop-blur-2xl shadow-2xl ring-1 ${theme.ring}`}
         >
           <header className={`flex items-center justify-between border-b ${theme.headerBorder} px-6 py-4`}>
             <div>
@@ -445,7 +445,7 @@ const Chatroom = () => {
             <div ref={messageEndRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className={`border-t px-6 py-4 ${theme.headerBorder}`}>
+          <form onSubmit={handleSubmit} className={`border-t px-6 py-4 ${theme.headerBorder} sticky bottom-0`}>
             <div className={`flex items-center gap-3 rounded-2xl ${theme.inputBg} px-4 py-3 ring-1 ${theme.ring}`}>
               <div className="relative group">
                 <button type="button" aria-label="Attach file" className="rounded-xl bg-slate-800/80 p-2 text-slate-200 hover:bg-slate-700/70" onClick={handleAttachClick}>
@@ -567,7 +567,7 @@ const Chatroom = () => {
           transition={{ duration: 0.45, delay: 0.1 }}
           className={`flex w-full flex-col gap-6 rounded-3xl bg-slate-800/60 backdrop-blur-xl p-6 shadow-2xl ring-1 ring-slate-700/40 xl:w-80 ${
             isRightOpen ? "fixed inset-y-4 left-4 right-4 z-50 xl:static" : ""
-          } xl:static`}
+          } xl:static max-h-full overflow-y-auto`}
           role="complementary"
           aria-label="Group details"
         >
