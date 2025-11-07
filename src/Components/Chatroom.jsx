@@ -278,7 +278,7 @@ const Chatroom = () => {
         </div>
       </div>
 
-      <div className="relative mx-auto flex h-full w-full max-w-none flex-col gap-4 px-4 py-4 lg:px-6 lg:py-6 xl:flex-row">
+      <div className="relative mx-auto flex h-full w-full max-w-none flex-col gap-3 px-3 py-3 sm:gap-4 sm:px-4 sm:py-4 lg:px-6 lg:py-6 xl:flex-row">
         {/* Left column */}
         {/* Overlay + Drawer (mobile) */}
         {isLeftOpen && (
@@ -293,7 +293,7 @@ const Chatroom = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.45 }}
-          className={`flex w-full flex-col rounded-3xl ${theme.panelBg} backdrop-blur-xl p-6 shadow-2xl ring-1 ${theme.ring} xl:w-72 ${
+          className={`flex w-full flex-col rounded-2xl sm:rounded-3xl ${theme.panelBg} backdrop-blur-xl p-4 sm:p-6 shadow-2xl ring-1 ${theme.ring} xl:w-72 ${
             isLeftOpen ? "fixed inset-y-4 left-4 right-4 z-50 xl:static" : ""
           } xl:static max-h-full overflow-y-auto`}
           role="complementary"
@@ -358,9 +358,9 @@ const Chatroom = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className={`flex h-full flex-1 flex-col rounded-3xl ${theme.panelBg} backdrop-blur-2xl shadow-2xl ring-1 ${theme.ring}`}
+          className={`flex h-full flex-1 flex-col rounded-2xl sm:rounded-3xl ${theme.panelBg} backdrop-blur-2xl shadow-2xl ring-1 ${theme.ring}`}
         >
-          <header className={`flex items-center justify-between border-b ${theme.headerBorder} px-6 py-4`}>
+          <header className={`flex items-center justify-between border-b ${theme.headerBorder} px-4 py-3 sm:px-6 sm:py-4`}>
             <div>
               <h1 className={`text-xl font-semibold ${theme.primary}`}>{selectedGroup.title}</h1>
               <p className={`text-xs ${theme.secondary}`}>24 Members · 3 online</p>
@@ -378,14 +378,14 @@ const Chatroom = () => {
             </div>
           </header>
 
-          <div className="mx-6 mt-4 rounded-2xl border border-indigo-500/30 bg-indigo-600/15 px-4 py-3 text-xs text-indigo-100 flex items-start gap-3">
+          <div className="mx-4 sm:mx-6 mt-3 sm:mt-4 rounded-xl sm:rounded-2xl border border-indigo-500/30 bg-indigo-600/15 px-3 sm:px-4 py-2.5 sm:py-3 text-[11px] sm:text-xs text-indigo-100 flex items-start gap-2 sm:gap-3">
             <Pin className="mt-0.5 h-4 w-4" />
             <p>
               <span className="font-semibold">Welcome!</span> Please check the pinned resources before asking questions.
             </p>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
@@ -394,7 +394,7 @@ const Chatroom = () => {
                 transition={{ duration: 0.25 }}
                 className="flex gap-3"
               >
-                <div className="mt-1 grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 text-sm font-semibold text-white">
+                <div className="mt-1 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 text-xs sm:text-sm font-semibold text-white">
                   {msg.avatar}
                 </div>
                 <div className="flex-1">
@@ -405,7 +405,7 @@ const Chatroom = () => {
                     </span>
                     <span className="text-slate-300/80">{msg.time}</span>
                   </div>
-                  <div className={`mt-2 rounded-2xl ${theme.inputBg} px-4 py-3 text-sm ${isDark ? 'text-slate-100' : 'text-slate-900'}` }>
+                  <div className={`mt-2 rounded-xl sm:rounded-2xl ${theme.inputBg} px-3 sm:px-4 py-2.5 sm:py-3 text-[13px] sm:text-sm ${isDark ? 'text-slate-100' : 'text-slate-900'}` }>
                     {msg.content}
                     {msg.attachment && (
                       <div className={`mt-3 rounded-xl border ${isDark ? 'border-slate-700/40 bg-slate-800/50 text-slate-200' : 'border-slate-200 bg-white/90 text-slate-700'} p-3 text-xs`}>
@@ -445,8 +445,8 @@ const Chatroom = () => {
             <div ref={messageEndRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className={`border-t px-6 py-4 ${theme.headerBorder} sticky bottom-0`}>
-            <div className={`flex items-center gap-3 rounded-2xl ${theme.inputBg} px-4 py-3 ring-1 ${theme.ring}`}>
+          <form onSubmit={handleSubmit} className={`border-t px-3 sm:px-6 py-3 sm:py-4 ${theme.headerBorder} sticky bottom-0 [padding-bottom:calc(env(safe-area-inset-bottom)_+_0.25rem)]`}>
+            <div className={`flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl ${theme.inputBg} px-3 sm:px-4 py-2.5 sm:py-3 ring-1 ${theme.ring}`}>
               <div className="relative group">
                 <button type="button" aria-label="Attach file" className="rounded-xl bg-slate-800/80 p-2 text-slate-200 hover:bg-slate-700/70" onClick={handleAttachClick}>
                   <Paperclip className="h-4 w-4" />
@@ -484,7 +484,7 @@ const Chatroom = () => {
                   <Smile className="h-4 w-4" />
                 </button>
                 {isEmojiOpen && (
-                  <div className={`absolute bottom-12 left-0 z-50 w-72 sm:w-80 rounded-xl ${isDark ? 'bg-slate-900/95 ring-1 ring-slate-700/50' : 'bg-white shadow'} p-3`}> 
+                  <div className={`absolute bottom-12 left-0 z-50 w-64 sm:w-80 rounded-xl ${isDark ? 'bg-slate-900/95 ring-1 ring-slate-700/50' : 'bg-white shadow'} p-3`}> 
                     <div className="mb-2 flex items-center gap-2 overflow-x-auto">
                       {['😀','🐱','🍔','⚽','🚗','💡','🏁'].map((tab,i)=> (
                         <button key={i} type="button" className={`px-2 py-1 rounded-md text-sm ${isDark ? 'hover:bg-slate-800/80' : 'hover:bg-slate-100'}`} onClick={() => setEmojiTab(i)} aria-label="Emoji category">
@@ -495,7 +495,7 @@ const Chatroom = () => {
                     <div className="mb-2">
                       <input placeholder="Search emoji" value={emojiQuery} onChange={(e)=>setEmojiQuery(e.target.value)} className={`w-full rounded-md px-3 py-2 text-sm ${isDark ? 'bg-slate-800/80 text-slate-100 placeholder:text-slate-400' : 'bg-white border border-slate-200'}`} />
                     </div>
-                    <div className="grid grid-cols-8 gap-1 text-xl max-h-52 overflow-y-auto">
+                    <div className="grid grid-cols-7 sm:grid-cols-8 gap-1 text-xl max-h-52 overflow-y-auto">
                       {filteredEmojis.map((emj)=> (
                         <button key={emj} type="button" className={`${isDark ? 'hover:bg-slate-800/80' : 'hover:bg-slate-100'} rounded-md`} onClick={() => insertEmoji(emj)} aria-label={`Insert ${emj}`}>
                           {emj}
@@ -515,7 +515,7 @@ const Chatroom = () => {
                   }
                 }}
                 placeholder="Type a message..."
-                className="flex-1 bg-transparent text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none"
+                className="flex-1 bg-transparent text-[13px] sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none"
                 aria-label="Message input"
               />
               {pendingAttachment && (
@@ -542,7 +542,7 @@ const Chatroom = () => {
               )}
               <button
                 type="submit"
-                className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:from-indigo-500 hover:to-purple-500"
+                className="flex items-center gap-2 rounded-xl sm:rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-lg hover:from-indigo-500 hover:to-purple-500"
               >
                 Send
                 <Send className="h-4 w-4" />
@@ -565,7 +565,7 @@ const Chatroom = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.45, delay: 0.1 }}
-          className={`flex w-full flex-col gap-6 rounded-3xl bg-slate-800/60 backdrop-blur-xl p-6 shadow-2xl ring-1 ring-slate-700/40 xl:w-80 ${
+          className={`flex w-full flex-col gap-4 sm:gap-6 rounded-2xl sm:rounded-3xl bg-slate-800/60 backdrop-blur-xl p-4 sm:p-6 shadow-2xl ring-1 ring-slate-700/40 xl:w-80 ${
             isRightOpen ? "fixed inset-y-4 left-4 right-4 z-50 xl:static" : ""
           } xl:static max-h-full overflow-y-auto`}
           role="complementary"
