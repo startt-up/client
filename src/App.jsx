@@ -10,6 +10,7 @@ import StudentLogin from "./Components/StudentLogin";
 import MentorDashboard from "./Components/MentorDashboard";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
+import Chatroom from "./Components/Chatroom";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="mentor-dashboard" element={<MentorDashboard/>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/chatroom" element={<Chatroom />} />
       </Routes>
     </>
   );
