@@ -8,6 +8,8 @@ import Login from "./Components/Login";
 import MentorSignup from "./Components/Mentorsignup";
 import StudentLogin from "./Components/StudentLogin";
 import MentorDashboard from "./Components/MentorDashboard";
+import Contact from "./Components/Contact";
+import About from "./Components/About";
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/MentorSignup" element={<MentorSignup />} />
         <Route path="student-login" element={<StudentLogin/>} />
         <Route path="mentor-dashboard" element={<MentorDashboard/>} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </>
   );

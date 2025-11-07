@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom'; // for navigation
+import axios from 'axios';
 
 const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate(); // navigation hook
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -16,24 +18,34 @@ const AuthPage = () => {
   };
 
   // Check if Login button should be disabled
-  const isLoginDisabled = email.trim() === '' || password.trim() === '';
+  const isLoginDisabled = isSubmitting || email.trim() === '' || password.trim() === '';
 
   const handleLogin = async (e) => {
     e.preventDefault();
-   try {
-    const response = await axios.post("http://localhost:5000/api/mentor/login", {
-      email,
-      password,
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post("http://localhost:5000/api/mentor/login", {
+        email,
+        password,
+      });
+      console.log(response.data);
+      // navigate('/mentor-dashboard'); // enable when backend login is ready
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-6">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-[#F8F7FF] to-white px-4 py-10 overflow-hidden">
+      {/* ambient gradient blobs */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-gradient-to-tr from-indigo-400 to-purple-400 opacity-30 blur-3xl animate-blob" />
+        <div className="absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-gradient-to-tr from-pink-300 to-rose-300 opacity-25 blur-3xl animate-blob animation-delay-2000" />
+      </div>
+
+      <div className="w-full max-w-md bg-white/70 backdrop-blur-md border border-purple-100 rounded-3xl shadow-2xl p-6 sm:p-8">
 
         {/* Tabs */}
         <div className="flex justify-center mb-6 bg-gray-100 rounded-full p-1">
@@ -52,7 +64,8 @@ const AuthPage = () => {
           </button>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-6">Mentor Login</h2>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-1">Welcome back</h2>
+        <p className="text-center text-gray-500 mb-6">Sign in to continue your journey</p>
 
         {/* Form */}
         <form className="space-y-4" onSubmit={handleLogin}>
@@ -100,12 +113,14 @@ const AuthPage = () => {
           <button
             type="submit"
             disabled={isLoginDisabled}
-            className={`w-full py-2 mt-4 text-white rounded-lg font-semibold transition
-              ${isLoginDisabled
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-indigo-500 to-indigo-400 hover:from-indigo-600 hover:to-indigo-500'}`}
+            className={`group relative w-full py-3 mt-2 text-white rounded-xl font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed overflow-hidden ${
+              isLoginDisabled
+                ? 'bg-indigo-400'
+                : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'
+            }`}
           >
-            Login
+            <span className="relative z-10">{isSubmitting ? 'Signing in…' : 'Sign in'}</span>
+            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[radial-gradient(120px_120px_at_var(--x,50%)_var(--y,50%),rgba(255,255,255,0.25),transparent_60%)]" />
           </button>
         </form>
 
@@ -127,6 +142,12 @@ const AuthPage = () => {
           <span>Continue with Google</span>
         </button>
       </div>
+
+      <style>{`
+        @keyframes blob { 0% { transform: translateY(0px) } 50% { transform: translateY(16px) } 100% { transform: translateY(0px) } }
+        .animate-blob { animation: blob 7s ease-in-out infinite }
+        .animation-delay-2000 { animation-delay: 2s }
+      `}</style>
     </div>
   );
 };
