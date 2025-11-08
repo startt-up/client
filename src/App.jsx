@@ -24,6 +24,9 @@ const App = () => {
         <Route path="/MentorSignup" element={<MentorSignup />} />
         <Route path="student-login" element={<StudentLogin/>} />
         <Route path="mentor-dashboard" element={<MentorDashboard/>} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/chatroom" element={<Chatroom />} />
       </Routes>
       <Footer/>
     </div>
