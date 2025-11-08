@@ -1,2 +1,5 @@
 @import "tailwindcss";
 
+.slick-slider ::before{
+    display: none;
+}

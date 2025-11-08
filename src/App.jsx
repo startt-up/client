@@ -2,16 +2,19 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Signup from "./Components/Signup";
-import LandingPage from "./Components/LandingPage";
+import LandingPage from "./Pages/LandingPage";
 import Role from "./Components/role";
 import Login from "./Components/Login";
 import MentorSignup from "./Components/Mentorsignup";
 import StudentLogin from "./Components/StudentLogin";
 import MentorDashboard from "./Components/MentorDashboard";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Footer from "./Components/Footer";
 
 const App = () => {
   return (
-    <>
+    <div className="relative">
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -22,7 +25,8 @@ const App = () => {
         <Route path="student-login" element={<StudentLogin/>} />
         <Route path="mentor-dashboard" element={<MentorDashboard/>} />
       </Routes>
-    </>
+      <Footer/>
+    </div>
   );
 };
 
