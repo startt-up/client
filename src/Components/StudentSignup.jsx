@@ -113,7 +113,12 @@ const StudentSignup = () => {
         course: formData.course,
       };
 
-      const response = await axios.post(`${API_URL}/student/register`, payload);
+      const response = await axios.post(`${API_URL}/student/register`, payload,{
+            headers: {
+              "Content-Type": "application/json",
+            },
+            timeout: 15000, // 15 seconds timeout
+          });
 
       // Store token and user data
       localStorage.setItem('token', response.data.token);
