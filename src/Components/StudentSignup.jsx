@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = 'https://gateway-api-exmk.onrender.com' || 'api'; 
+const API_URL = 'https://gateway-api-exmk.onrender.com' || '/api';
 const years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
 const initialState = {
@@ -113,7 +113,7 @@ const StudentSignup = () => {
         course: formData.course,
       };
 
-      const response = await axios.post(`${API_URL}/student/register`, payload,{
+      const response = await axios.post(`${API_URL}/api/student/register`, payload,{
             headers: {
               "Content-Type": "application/json",
             },

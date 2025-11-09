@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Building2, User, ArrowRight, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = 'https://gateway-api-exmk.onrender.com' || 'api'; 
+const API_URL = 'https://gateway-api-exmk.onrender.com' || '/api'; 
 
 const RecruiterSignup = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const RecruiterSignup = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/recruiter/register`, {
+      const response = await axios.post(`${API_URL}/api/recruiter/register`, {
         ...formData,
         role: 'recruiter' // Explicitly send role
       });
