@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const Community = () => {
   const navigate = useNavigate();
@@ -27,8 +27,8 @@ const Community = () => {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const [studentsRes, mentorsRes] = await Promise.all([
-        axios.get(`${API_URL}/students/browse`, { headers }).catch(() => ({ data: [] })),
-        axios.get(`${API_URL}/mentors/browse`, { headers }).catch(() => ({ data: [] }))
+        axios.get(`${API_URL}/student/browse`, { headers }).catch(() => ({ data: [] })),
+        axios.get(`${API_URL}/mentor/browse`, { headers }).catch(() => ({ data: [] }))
       ]);
 
       setStudents(studentsRes.data || []);

@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
@@ -32,7 +32,7 @@ const initialState = {
   terms: false,
 };
 
-const Signup = () => {
+const StudentSignup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -97,10 +97,11 @@ const Signup = () => {
     setErrors({});
 
     try {
-      const response = await axios.post(`${API_URL}/students/register`, {
+      const response = await axios.post(`${API_URL}/student/register`, {
         email: formData.email,
         password: formData.password,
         fullName: formData.fullName,
+        role: 'student', // Explicitly send role
         education: {
           institution: formData.collegeName,
           degree: formData.course,
@@ -117,7 +118,7 @@ const Signup = () => {
       
       // Navigate to student profile after a short delay
       setTimeout(() => {
-        navigate('/#/student-profile');
+        navigate('/student-profile');
       }, 1500);
     } catch (error) {
       console.error('Registration error:', error);
@@ -183,7 +184,7 @@ const Signup = () => {
 
           <div className="space-y-3 text-sm text-slate-400">
             <p className="text-slate-300">✨ Trusted by 1,000+ students across 20+ campuses.</p>
-            <p>“TechLearn Hub has transformed how we learn. The community is incredibly supportive.”</p>
+            <p>"TechLearn Hub has transformed how we learn. The community is incredibly supportive."</p>
             <p className="text-slate-200">— College Innovators Society</p>
           </div>
         </motion.div>
@@ -410,4 +411,5 @@ const PasswordField = ({ label, value, onChange, error, show, onToggle }) => (
   </motion.div>
 );
 
-export default Signup;
+export default StudentSignup;
+

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const RecruiterProfile = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const RecruiterProfile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/recruiters/profile`, {
+      const response = await axios.get(`${API_URL}/recruiter/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile(response.data);
@@ -71,7 +71,7 @@ const RecruiterProfile = () => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`${API_URL}/recruiters/profile`, formData, {
+      await axios.put(`${API_URL}/recruiter/profile`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setEditing(false);
@@ -105,7 +105,7 @@ const RecruiterProfile = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${API_URL}/recruiters/upload-logo`, formDataUpload, {
+      const response = await axios.post(`${API_URL}/recruiter/upload-logo`, formDataUpload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'

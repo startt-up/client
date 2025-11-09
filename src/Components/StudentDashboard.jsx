@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const StudentDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/students/dashboard`, {
+      const response = await axios.get(`${API_URL}/student/dashboard`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setDashboardData(response.data);

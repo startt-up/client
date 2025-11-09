@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Building2, User, ArrowRight, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api'; 
 
 const RecruiterSignup = () => {
   const navigate = useNavigate();
@@ -52,7 +52,10 @@ const RecruiterSignup = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/recruiters/register`, formData);
+      const response = await axios.post(`${API_URL}/recruiter/register`, {
+        ...formData,
+        role: 'recruiter' // Explicitly send role
+      });
       
       // Store token and user data
       localStorage.setItem('token', response.data.token);
