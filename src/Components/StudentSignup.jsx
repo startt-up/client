@@ -1,3 +1,5 @@
+
+
 import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -18,12 +20,11 @@ import {
 import axios from 'axios';
 
 const API_URL = '/api';
-
 const years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
 const initialState = {
   fullName: '',
-  collegeName: '',
+  university: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -41,13 +42,12 @@ const StudentSignup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Personal email pattern - excludes .edu and .ac.in domains
+  // Personal email validation (non-college domains)
   const emailPattern = useMemo(() => {
     const personalEmailRegex = /^(?!.*\s)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i;
     const excludePattern = /\.(edu|ac\.in)$/i;
     return (email) => {
       if (!personalEmailRegex.test(email)) return false;
-      // Reject if it's a college email
       if (excludePattern.test(email)) return false;
       return true;
     };
@@ -78,15 +78,14 @@ const StudentSignup = () => {
   const validate = () => {
     const newErrors = {};
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
-    if (!formData.collegeName.trim()) newErrors.collegeName = 'Please enter your college name';
+    if (!formData.university.trim()) newErrors.university = 'Please enter your university name';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!emailPattern(formData.email.trim())) newErrors.email = 'Please use a personal email address (not .edu or .ac.in)';
+    else if (!emailPattern(formData.email.trim())) newErrors.email = 'Please use a personal email (not .edu or .ac.in)';
     if (!formData.password) newErrors.password = 'Password is required';
     else if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
     if (!formData.confirmPassword) newErrors.confirmPassword = 'Confirm your password';
     else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords don't match";
     if (!formData.course.trim()) newErrors.course = 'Course / Department is required';
-    if (!formData.year) newErrors.year = 'Select your year of study';
     if (!formData.terms) newErrors.terms = 'You must accept the Terms & Conditions';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -107,17 +106,14 @@ const StudentSignup = () => {
     setErrors({});
 
     try {
-      const response = await axios.post(`${API_URL}/student/register`, {
+      const payload = {
         email: formData.email,
         password: formData.password,
-        fullName: formData.fullName,
-        role: 'student', // Explicitly send role
-        education: {
-          institution: formData.collegeName,
-          degree: formData.course,
-          graduationYear: formData.year
-        }
-      });
+        university: formData.university,
+        course: formData.course,
+      };
+
+      const response = await axios.post(`${API_URL}/student/register`, payload);
 
       // Store token and user data
       localStorage.setItem('token', response.data.token);
@@ -125,11 +121,7 @@ const StudentSignup = () => {
       localStorage.setItem('role', 'student');
 
       setSuccessMessage('Account created successfully! Redirecting...');
-      
-      // Navigate to student profile after a short delay
-      setTimeout(() => {
-        navigate('/student-profile');
-      }, 1500);
+      setTimeout(() => navigate('/student-profile'), 1500);
     } catch (error) {
       console.error('Registration error:', error);
       const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
@@ -142,6 +134,7 @@ const StudentSignup = () => {
 
   return (
     <div className="relative min-h-screen bg-slate-950 text-slate-100 overflow-hidden">
+      {/* Background Glows */}
       <div className="pointer-events-none absolute inset-0">
         <motion.div
           variants={floatingVariant}
@@ -161,7 +154,7 @@ const StudentSignup = () => {
       </div>
 
       <div className="relative flex min-h-screen flex-col lg:flex-row">
-        {/* Banner */}
+        {/* Banner Section */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
@@ -199,7 +192,7 @@ const StudentSignup = () => {
           </div>
         </motion.div>
 
-        {/* Form */}
+        {/* Signup Form */}
         <div className="flex flex-1 items-center justify-center px-4 py-10 sm:px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, x: 24 }}
@@ -254,12 +247,12 @@ const StudentSignup = () => {
               />
 
               <Field
-                label="College Name"
+                label="University Name"
                 icon={Building2}
-                value={formData.collegeName}
-                onChange={handleChange('collegeName')}
-                placeholder="e.g., National Institute of Technology"
-                error={errors.collegeName}
+                value={formData.university}
+                onChange={handleChange('university')}
+                placeholder="e.g., Delhi University"
+                error={errors.university}
               />
 
               <Field
@@ -299,26 +292,6 @@ const StudentSignup = () => {
                 error={errors.course}
               />
 
-              <motion.div variants={fieldVariants}>
-                <label className="mb-2 block text-sm font-medium text-slate-200">Year of Study</label>
-                <div className="relative">
-                  <select
-                    value={formData.year}
-                    onChange={handleChange('year')}
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20"
-                  >
-                    <option value="" className="text-slate-700">Select your year</option>
-                    {years.map((year) => (
-                      <option key={year} value={year} className="text-slate-900">
-                        {year}
-                      </option>
-                    ))}
-                  </select>
-                  <GraduationCap className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-indigo-300" />
-                </div>
-                {errors.year && <p className="mt-1 text-xs text-rose-400">{errors.year}</p>}
-              </motion.div>
-
               <motion.div variants={fieldVariants} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                 <input
                   id="terms"
@@ -347,25 +320,6 @@ const StudentSignup = () => {
                   'Create account'
                 )}
               </motion.button>
-
-              <motion.div variants={fieldVariants} className="flex items-center gap-3 text-xs text-slate-400">
-                <span className="h-px flex-1 bg-white/10" />
-                or continue with
-                <span className="h-px flex-1 bg-white/10" />
-              </motion.div>
-
-              <motion.div variants={fieldVariants} className="grid grid-cols-2 gap-3 text-sm">
-                <button type="button" className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-2 text-indigo-200 hover:bg-white/10">
-                  <Chrome className="h-4 w-4" /> Google
-                </button>
-                <button type="button" className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-2 text-indigo-200 hover:bg-white/10">
-                  <Github className="h-4 w-4" /> GitHub
-                </button>
-              </motion.div>
-
-              <motion.p variants={fieldVariants} className="text-xs text-slate-400">
-                We value your privacy — your data is secure with TechLearn Hub.
-              </motion.p>
 
               <motion.p variants={fieldVariants} className="text-center text-sm text-slate-300">
                 Already have an account?{' '}
@@ -422,4 +376,3 @@ const PasswordField = ({ label, value, onChange, error, show, onToggle }) => (
 );
 
 export default StudentSignup;
-
