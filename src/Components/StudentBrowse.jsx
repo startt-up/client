@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const StudentBrowse = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const StudentBrowse = () => {
   const fetchRecruiters = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/recruiters/browse`, {
+      const response = await axios.get(`${API_URL}/recruiter/browse`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRecruiters(response.data);

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const StudentProfile = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const StudentProfile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/students/profile`, {
+      const response = await axios.get(`${API_URL}/student/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile(response.data);
@@ -71,7 +71,7 @@ const StudentProfile = () => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`${API_URL}/students/profile`, formData, {
+      await axios.put(`${API_URL}/student/profile`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setEditing(false);
@@ -105,7 +105,7 @@ const StudentProfile = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${API_URL}/students/upload-resume`, formDataUpload, {
+      const response = await axios.post(`${API_URL}/student/upload-resume`, formDataUpload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'

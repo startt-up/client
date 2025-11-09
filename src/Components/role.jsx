@@ -17,7 +17,7 @@ const Role = () => {
       color: "from-blue-500 to-cyan-500",
       bgColor: "bg-blue-50",
       hoverColor: "hover:bg-blue-100",
-      onClick: () => navigate("/Signup"),
+      onClick: () => navigate("/student-signup"),
     },
     {
       id: "mentor",
@@ -27,7 +27,7 @@ const Role = () => {
       color: "from-purple-500 to-pink-500",
       bgColor: "bg-purple-50",
       hoverColor: "hover:bg-purple-100",
-      onClick: () => navigate("/MentorSignup"),
+      onClick: () => navigate("/mentor-signup"),
     },
     {
       id: "recruiter",

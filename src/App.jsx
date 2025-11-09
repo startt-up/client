@@ -1,17 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
-import Signup from "./Components/Signup";
+import StudentSignup from "./Components/StudentSignup";
 import LandingPage from "./Components/LandingPage";
 import Role from "./Components/role";
 import AuthPage from "./Components/Login";
 import MentorSignup from "./Components/Mentorsignup";
-import StudentLogin from "./Components/StudentLogin";
 import MentorDashboard from "./Components/MentorDashboard";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
 import Chatroom from "./Components/Chatroom";
-import RecruiterLogin from "./Components/RecruiterLogin";
 import RecruiterSignup from "./Components/RecruiterSignup";
 import StudentProfile from "./Components/StudentProfile";
 import RecruiterProfile from "./Components/RecruiterProfile";
@@ -31,14 +29,12 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/role" element={<Role />} />
         <Route path="/login" element={<AuthPage />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/MentorSignup" element={<MentorSignup />} />
-        <Route path="/student-login" element={<StudentLogin/>} />
+        <Route path="/student-signup" element={<StudentSignup />} />
+        <Route path="/mentor-signup" element={<MentorSignup />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/chatroom" element={<Chatroom />} />
         {/* Recruiter Routes */}
-        <Route path="/recruiter-login" element={<RecruiterLogin />} />
         <Route path="/recruiter-signup" element={<RecruiterSignup />} />
         <Route path="/recruiter-profile" element={<ProtectedRoute allowedRoles={['recruiter']}><RecruiterProfile /></ProtectedRoute>} />
         <Route path="/recruiter-browse" element={<ProtectedRoute allowedRoles={['recruiter']}><RecruiterBrowse /></ProtectedRoute>} />
