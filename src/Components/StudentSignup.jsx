@@ -41,7 +41,17 @@ const StudentSignup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const emailPattern = useMemo(() => /^(?!.*\s)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(edu|ac\.in)$/i, []);
+  // Personal email pattern - excludes .edu and .ac.in domains
+  const emailPattern = useMemo(() => {
+    const personalEmailRegex = /^(?!.*\s)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i;
+    const excludePattern = /\.(edu|ac\.in)$/i;
+    return (email) => {
+      if (!personalEmailRegex.test(email)) return false;
+      // Reject if it's a college email
+      if (excludePattern.test(email)) return false;
+      return true;
+    };
+  }, []);
 
   const floatingVariant = {
     animate: {
@@ -70,7 +80,7 @@ const StudentSignup = () => {
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
     if (!formData.collegeName.trim()) newErrors.collegeName = 'Please enter your college name';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!emailPattern.test(formData.email.trim())) newErrors.email = 'Use a valid .edu or .ac.in email';
+    else if (!emailPattern(formData.email.trim())) newErrors.email = 'Please use a personal email address (not .edu or .ac.in)';
     if (!formData.password) newErrors.password = 'Password is required';
     else if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
     if (!formData.confirmPassword) newErrors.confirmPassword = 'Confirm your password';
@@ -253,11 +263,11 @@ const StudentSignup = () => {
               />
 
               <Field
-                label="Student Email"
+                label="Personal Email"
                 icon={Mail}
                 value={formData.email}
                 onChange={handleChange('email')}
-                placeholder="you@college.edu"
+                placeholder="yourname@gmail.com"
                 error={errors.email}
                 type="email"
               />
