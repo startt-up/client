@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Building2, User, ArrowRight, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 
-const API_URL = '/api'; 
+const API_URL = 'https://gateway-api-exmk.onrender.com' || 'api'; 
 
 const RecruiterSignup = () => {
   const navigate = useNavigate();
