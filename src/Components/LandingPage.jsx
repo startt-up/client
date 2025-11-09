@@ -513,6 +513,7 @@
 
 // export default LandingPage;
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ChevronDown,
@@ -525,6 +526,8 @@ import {
   Github,
   Mail,
 } from "lucide-react";
+// Import images - if they don't exist, the app will show errors in console
+// but we'll handle it gracefully in the component
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
 import img3 from "../assets/section1.png";
@@ -568,7 +571,8 @@ const faqs = [
   { q: "Can I host paid workshops?", a: "Yes — mentors can create paid workshops and collect fees via integrated payments." },
 ];
 
-export default function LandingPageModern() {
+const LandingPage = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(null);
   const [email, setEmail] = useState("");
 
@@ -583,7 +587,11 @@ export default function LandingPageModern() {
       {/* NAVBAR */}
       <nav className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={icon1} alt="logo" className="w-12 h-12 rounded-lg shadow-md" />
+          {icon1 ? (
+            <img src={icon1} alt="logo" className="w-12 h-12 rounded-lg shadow-md" />
+          ) : (
+            <div className="w-12 h-12 rounded-lg bg-gradient-to-tr from-purple-500 to-pink-500 shadow-md" />
+          )}
           <div>
             <h3 className="font-bold text-lg">TechLearn Hub</h3>
             <p className="text-xs text-gray-600 -mt-1">Learn • Connect • Grow</p>
@@ -594,7 +602,7 @@ export default function LandingPageModern() {
           <a className="text-sm font-medium hover:text-purple-600" href="#features">Features</a>
           <a className="text-sm font-medium hover:text-purple-600" href="#mentors">Mentors</a>
           <a className="text-sm font-medium hover:text-purple-600" href="#faq">FAQ</a>
-          <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg">Sign In</button>
+          <button onClick={() => navigate('/role')} className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg">Sign In</button>
         </div>
 
         {/* Mobile menu placeholder */}
@@ -614,7 +622,7 @@ export default function LandingPageModern() {
           <p className="mt-5 text-gray-600 max-w-xl">Join a community of learners and mentors — get doubt support, live sessions, and hands-on projects. Perfect for interview prep and real-world skills.</p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <motion.a whileHover={{ scale: 1.03 }} className="px-6 py-3 rounded-lg text-white bg-gradient-to-r from-purple-600 to-pink-500 shadow-lg">Get Started</motion.a>
+            <motion.button onClick={() => navigate('/role')} whileHover={{ scale: 1.03 }} className="px-6 py-3 rounded-lg text-white bg-gradient-to-r from-purple-600 to-pink-500 shadow-lg">Get Started</motion.button>
             <a href="#features" className="px-6 py-3 rounded-lg border border-gray-200">Explore Features</a>
           </div>
 
@@ -640,7 +648,13 @@ export default function LandingPageModern() {
         <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8 }} className="flex justify-center lg:justify-end">
           <div className="relative w-[360px] sm:w-[420px] lg:w-[520px]">
             <div className="rounded-2xl bg-white shadow-2xl p-6">
-              <img src={img3} alt="app" className="w-full rounded-lg" />
+              {img3 ? (
+                <img src={img3} alt="app" className="w-full rounded-lg" />
+              ) : (
+                <div className="w-full h-64 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg flex items-center justify-center text-gray-500">
+                  App Preview
+                </div>
+              )}
             </div>
             <div className="absolute -left-6 -top-8 bg-gradient-to-r from-purple-600 to-pink-500 text-white px-4 py-2 rounded-lg shadow-lg">Live Now</div>
             <div className="absolute right-2 bottom-4 bg-white/80 p-3 rounded-lg shadow">Preview • Community chat</div>
@@ -668,7 +682,13 @@ export default function LandingPageModern() {
       <section id="mentors" className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-gradient-to-br from-white to-purple-50 rounded-2xl p-6 shadow-xl text-center">
-            <img src={img1} alt="mentor" className="mx-auto w-36 h-36 rounded-full object-cover shadow-lg" />
+            {img1 ? (
+              <img src={img1} alt="mentor" className="mx-auto w-36 h-36 rounded-full object-cover shadow-lg" />
+            ) : (
+              <div className="mx-auto w-36 h-36 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 shadow-lg flex items-center justify-center text-white text-2xl font-bold">
+                RA
+              </div>
+            )}
             <h4 className="mt-4 font-semibold">Raj Aryan</h4>
             <p className="text-sm text-gray-600 mt-2">Frontend Mentor • UI/UX</p>
             <div className="mt-4 inline-flex items-center gap-2 bg-white p-2 rounded-full shadow">Top Rated <Star className="w-4 h-4 text-yellow-400" /></div>
@@ -678,7 +698,13 @@ export default function LandingPageModern() {
             <h3 className="text-xl font-semibold">What students say</h3>
             <p className="mt-3 text-gray-600">"The community helped me crack interviews — live mock sessions with mentors were a game changer."</p>
             <div className="mt-4 flex items-center gap-3">
-              <img src={img2} alt="student" className="w-16 h-16 rounded-full" />
+              {img2 ? (
+                <img src={img2} alt="student" className="w-16 h-16 rounded-full" />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-white font-bold">
+                  SR
+                </div>
+              )}
               <div>
                 <div className="font-semibold">Sameer Roy</div>
                 <div className="text-sm text-gray-600">Fullstack Student</div>
@@ -717,7 +743,7 @@ export default function LandingPageModern() {
           </div>
           <div className="flex gap-3">
             <button className="px-5 py-3 rounded-lg bg-white/20 backdrop-blur">Request Invite</button>
-            <button className="px-5 py-3 rounded-lg bg-white text-purple-600 font-semibold">Get Started</button>
+            <button onClick={() => navigate('/role')} className="px-5 py-3 rounded-lg bg-white text-purple-600 font-semibold">Get Started</button>
           </div>
         </div>
       </section>
@@ -726,7 +752,11 @@ export default function LandingPageModern() {
       <footer className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <img src={icon2} alt="brand" className="w-12 h-12 rounded-lg" />
+            {icon2 ? (
+              <img src={icon2} alt="brand" className="w-12 h-12 rounded-lg" />
+            ) : (
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-tr from-purple-500 to-pink-500" />
+            )}
             <p className="mt-3 text-gray-600">TechLearn Hub — building learners into builders.</p>
           </div>
           <div className="text-sm text-gray-600">
@@ -755,5 +785,7 @@ export default function LandingPageModern() {
       `}</style>
     </div>
   );
-}
+};
+
+export default LandingPage;
 

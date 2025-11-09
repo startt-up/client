@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   Mail,
   Lock,
@@ -14,6 +15,9 @@ import {
   Chrome,
   ShieldCheck,
 } from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
@@ -29,6 +33,7 @@ const initialState = {
 };
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -84,16 +89,44 @@ const Signup = () => {
     setSuccessMessage('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
     setIsSubmitting(true);
     setSuccessMessage('');
-    setTimeout(() => {
+    setErrors({});
+
+    try {
+      const response = await axios.post(`${API_URL}/students/register`, {
+        email: formData.email,
+        password: formData.password,
+        fullName: formData.fullName,
+        education: {
+          institution: formData.collegeName,
+          degree: formData.course,
+          graduationYear: formData.year
+        }
+      });
+
+      // Store token and user data
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('role', 'student');
+
+      setSuccessMessage('Account created successfully! Redirecting...');
+      
+      // Navigate to student profile after a short delay
+      setTimeout(() => {
+        navigate('/#/student-profile');
+      }, 1500);
+    } catch (error) {
+      console.error('Registration error:', error);
+      const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+      setErrors({ submit: errorMessage });
+      setSuccessMessage('');
+    } finally {
       setIsSubmitting(false);
-      setSuccessMessage('Account created successfully! Welcome to TechLearn Hub.');
-      setFormData(initialState);
-    }, 1600);
+    }
   };
 
   return (
@@ -184,6 +217,17 @@ const Signup = () => {
                 >
                   <ShieldCheck className="h-4 w-4" />
                   <span>{successMessage}</span>
+                </motion.div>
+              )}
+              {errors.submit && (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="mb-6 flex items-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200"
+                >
+                  <span>{errors.submit}</span>
                 </motion.div>
               )}
             </AnimatePresence>
