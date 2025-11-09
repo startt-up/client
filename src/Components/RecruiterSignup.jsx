@@ -52,7 +52,7 @@ const RecruiterSignup = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/recruiter/register`, {
+      const response = await axios.post(`${API_URL}/api/recruiter/register`, {
         ...formData,
         role: 'recruiter' // Explicitly send role
       });
