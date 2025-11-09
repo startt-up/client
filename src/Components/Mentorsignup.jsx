@@ -82,7 +82,7 @@ export default function MentorSignup() {
       case 3:
         return validators.skills(formData.skills) && validators.hourlyRate(formData.hourlyRate);
       default:
-        return false;
+    return false;
     }
   };
 
@@ -122,7 +122,11 @@ export default function MentorSignup() {
   const handleAddSkill = (e) => {
     e?.preventDefault();
     const skill = skillInput.trim();
-    if (!skill || formData.skills.includes(skill)) return;
+    if (!skill) return;
+    if (formData.skills.includes(skill)) {
+      setSkillInput("");
+      return;
+    }
     updateField("skills", [...formData.skills, skill]);
     setSkillInput("");
   };
@@ -265,7 +269,7 @@ export default function MentorSignup() {
           {/* Header */}
           <div className="p-4 sm:p-6 md:p-8 border-b border-white/10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-              <div>
+            <div>
                 <motion.h1
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -276,8 +280,8 @@ export default function MentorSignup() {
                 <p className="mt-2 text-sm sm:text-base text-white/70">
                   Share your expertise and inspire the next generation
                 </p>
-              </div>
-              <div className="flex items-center gap-3 w-full sm:w-auto">
+            </div>
+            <div className="flex items-center gap-3 w-full sm:w-auto">
                 <span className="text-xs text-white/60 whitespace-nowrap">Step {step + 1}/{FORM_CONFIG.steps.length}</span>
                 <div className="flex-1 sm:w-48 h-2 bg-white/10 rounded-full overflow-hidden">
                   <motion.div
@@ -285,10 +289,10 @@ export default function MentorSignup() {
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                  />
-                </div>
+                />
               </div>
             </div>
+          </div>
 
             {/* Step Indicator */}
             <div className="flex items-center justify-center gap-2 sm:gap-4 overflow-x-auto pb-2">
@@ -339,7 +343,7 @@ export default function MentorSignup() {
                   </React.Fragment>
                 );
               })}
-            </div>
+              </div>
           </div>
 
           {/* Form Content */}
@@ -414,7 +418,7 @@ export default function MentorSignup() {
                     <div>
                       <label className="block text-sm font-medium text-white/90 mb-2">
                         Email Address
-                      </label>
+                    </label>
                       <div className="relative">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={20} />
                         <input
@@ -437,12 +441,12 @@ export default function MentorSignup() {
                       {formData.email && !validators.email(formData.email) && (
                         <p className="mt-2 text-sm text-red-400">Please enter a valid email address</p>
                       )}
-                    </div>
+                  </div>
 
                     <div>
                       <label className="block text-sm font-medium text-white/90 mb-2">
                         Password
-                      </label>
+                    </label>
                       <div className="relative">
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={20} />
                         <input
@@ -496,7 +500,7 @@ export default function MentorSignup() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
+                  <div>
                       <label className="block text-sm font-medium text-white/90 mb-2">
                         Full Name
                       </label>
@@ -513,9 +517,9 @@ export default function MentorSignup() {
                             : "border-white/20"
                         } text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
                       />
-                    </div>
+                  </div>
 
-                    <div>
+                  <div>
                       <label className="block text-sm font-medium text-white/90 mb-2 flex items-center gap-2">
                         <Briefcase size={16} />
                         Experience (Years)
@@ -653,7 +657,7 @@ export default function MentorSignup() {
                         Add
                       </motion.button>
                     </form>
-                  </div>
+                    </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
@@ -675,7 +679,7 @@ export default function MentorSignup() {
                             : "border-white/20"
                         } text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
                       />
-                    </div>
+                  </div>
 
                     <div>
                       <label className="block text-sm font-medium text-white/90 mb-2 flex items-center gap-2">
@@ -797,7 +801,7 @@ export default function MentorSignup() {
             </AnimatePresence>
 
             {/* Navigation */}
-            {step > 0 && step < 4 && (
+              {step > 0 && step < 4 && (
               <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
                 <motion.button
                   type="button"
