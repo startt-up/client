@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // Use relative path since vite proxy is configured
-const API_URL = 'https://gateway-api-exmk.onrender.com' || 'api'; 
+const API_URL = 'https://gateway-api-exmk.onrender.com' || '/api'; 
 
 const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,9 +31,9 @@ const AuthPage = () => {
 
     // Try all three login endpoints sequentially (using singular form)
     const loginEndpoints = [
-      { url: `${API_URL}/student/login`, role: 'student', redirect: '/student-profile' },
-      { url: `${API_URL}/recruiter/login`, role: 'recruiter', redirect: '/recruiter-profile' },
-      { url: `${API_URL}/mentor/login`, role: 'mentor', redirect: '/mentor-dashboard' }
+      { url: `${API_URL}/api/student/login`, role: 'student', redirect: '/student-profile' },
+      { url: `${API_URL}/api/recruiter/login`, role: 'recruiter', redirect: '/recruiter-profile' },
+      { url: `${API_URL}/api/mentor/login`, role: 'mentor', redirect: '/mentor-dashboard' }
     ];
 
     for (const endpoint of loginEndpoints) {
