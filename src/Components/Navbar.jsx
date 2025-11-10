@@ -13,8 +13,8 @@ const Navbar = () => {
   const menuItems = ['Home', 'Features', 'Community', 'About', 'Contact']
 
   return (
-    <div className='w-full absolute md:top-3 z-50 flex justify-center'>
-      <nav className='bg-white shadow-md rounded-md  text-gray-800 w-full md:w-4/5'>
+    <div className='w-full absolute md:top-8 z-50 flex justify-center'>
+      <nav className='bg-white border-b-3 border-gray-200 rounded-2xl text-gray-800 w-full md:w-[86%] p-1'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between items-center h-16'>
             {/* Logo */}
@@ -43,7 +43,7 @@ const Navbar = () => {
               <button onClick={handleLogin} className='cursor-pointer font'>
                 Login
               </button>
-              <button onClick={handleSignUp} className='cursor-pointer font bg-gradient-to-r from-purple-600 to-blue-200 px-2 py-1 rounded-full text-white'>
+              <button onClick={handleSignUp} className='cursor-pointer font bg-gradient-to-r from-purple-600 to-blue-200 py-2 px-3 rounded-full text-white'>
                 Sign Up
               </button>
             </div>

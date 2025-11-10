@@ -29,17 +29,26 @@ const LandingPage = () => {
         <img
           src='./Ellipse 2926.png'
           alt='...'
-          className='absolute top-10 md:top-0 right-0 w-1/2 md:w-1/3 opacity-20 md:opacity-100'
+          className='absolute top-10 md:top-0 right-0 w-1/2 md:w-2/5 opacity-20 md:opacity-100'
         />
-        <div className='w-4/5 relative'>
+        <div className='w-[86%] mt-20 md:mt-46 sm:mt-0 relative'>
           <img
             src='./hat.png'
-            className='absolute top-0 -right-5 md:right-1/2 w-6 md:w-10'
+            className='absolute -top-13 -right-5 md:left-[52%] w-6 md:w-13 sm:w-16'
           />
-          <div className='w-full md:w-1/2 text-3xl md:text-5xl font-bold md:leading-16'>
+          <div className='size-28 rounded-xl absolute border-1 border-gray-300 rotate-45 backdrop-blur-sm left-[56%] top-10 md:inline-block hidden'>
+            <div className='-rotate-45 w-full h-full flex flex-col justify-center items-center'>
+              <img src='./Vector3.png' className='w-6' />
+              <p className='text-sm font-medium text-center -rotate-6'>Total Students 1000+</p>
+            </div>
+          </div>
+          <div className='w-full md:w-1/2 fontHead font-bold md:leading-18'>
             Connecting <span className='text-[#7940E9]'>Students</span> and
             <span className='text-[#7940E9]'> Mentors</span> for real time
             collaborative Learning
+            <span>
+              <img src='./pen.png' alt='...' className='inline w-8 sm:w-15 mx-2' />
+            </span>
           </div>
           <p className='md:w-1/2 mt-5 leading-7'>
             “Join a vibrant network where students, mentors, and admins connect
@@ -57,21 +66,21 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className='w-full my-10 flex justify-center'>
-        <div className='w-4/5 my-10 mx-auto relative'>
+      <div className='w-full min-h-screen my-10 flex justify-center'>
+        <div className='w-[86%] my-10 mx-auto relative'>
           <img
             src='Line 162.png'
             alt='...'
-            className='absolute w-3/4 left-1/7 top-10 md:inline-block hidden'
+            className='absolute w-3/5 left-1/5 top-22 md:inline-block hidden'
           />
           <div className='w-full flex md:flex-row flex-col items-center md:items-start justify-between'>
             <PersonBG
               bg={'#E4D6FF'}
               image={'pngwing.com (80) 1.png'}
-              namebg={'purple-800/70'}
+              namebg={"purple-800/70"}
               name={'Raj Aryan'}
             />
-            <p className='w-full md:w-1/2 text-center font-medium text-sm md:mt-0 mt-10'>
+            <p className='w-full md:w-2/3 text-center font-medium text-base md:mt-0 mt-10'>
               As a mentor, you have the power to inspire, guide, and shape the
               future of eager learners. Our platform enables you to share
               knowledge, connect with motivated students, and build meaningful
@@ -79,8 +88,8 @@ const LandingPage = () => {
               personal and professional growth.
             </p>
           </div>
-          <div className='w-full flex md:flex-row flex-col-reverse items-center md:items-end justify-between mt-20 md:mt-5'>
-            <p className='w-full md:w-1/2 text-center font-medium text-sm md:mt-0 mt-10'>
+          <div className='w-full flex md:flex-row flex-col-reverse items-center md:items-end justify-between mt-24 md:mt-5'>
+            <p className='w-full md:w-2/3 text-center font-medium text-base md:mt-0 mt-10'>
               As a mentor, you have the power to inspire, guide, and shape the
               future of eager learners. Our platform enables you to share
               knowledge, connect with motivated students, and build meaningful
@@ -139,7 +148,7 @@ const LandingPage = () => {
             <div className='mt-10'>
               {faqs.map((faq, index) => (
                 <div className='my-5' key={index}>
-                  <Accordion title={faq.q} content={faq.a} />
+                  <Accordion title={faq.q} content={faq.a} index={index + 1}/>
                 </div>
               ))}
             </div>
@@ -156,18 +165,18 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className='w-full min-h-[80vh] bg-[#7940E9] rounded-tl-3xl rounded-tr-3xl'>
-        <div className='p-5'>
+      <div className='w-full md:min-h-screen bg-[#7940E9] rounded-tl-3xl rounded-tr-3xl'>
+        <div className='h-full p-5'>
           <div className='text-4xl font-bold text-white text-center'>
             What People Say
           </div>
-          <div className='text-center text-white text-lg mt-2'>
+          <div className='text-center text-white text-2xl mt-2'>
             "Discover what our and partners have to say about their journey with
             us — real stories, real experiences."
           </div>
 
-          <div className='w-full flex justify-center'>
-            <div className='mt-10 w-4/5'>
+          <div className='w-full h-full flex justify-center'>
+            <div className='mt-10 w-[90%] min-h-full'>
               <PeoplesSlider />
             </div>
           </div>
@@ -175,8 +184,8 @@ const LandingPage = () => {
       </div>
 
       <div className='w-full min-h-[70vh] flex justify-center items-center flex-col-reverse md:flex-row py-3'>
-        <div className='w-full md:w-1/2'>
-          <p className='text-[#7940E9] text-3xl md:text-5xl font-bold md:leading-15 text-center md:text-left'>
+        <div className='w-4/5 md:w-3/5'>
+          <p className='text-[#7940E9] text-3xl md:text-6xl font-bold md:leading-15 text-center md:text-left'>
             Ready to join your learning community?
           </p>
           <button className='bg-[#7940E9] text-white text-lg p-2 rounded-xl mt-5 block mx-auto md:mx-0'>

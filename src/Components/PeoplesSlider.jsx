@@ -61,7 +61,7 @@ const PeoplesSlider = () => {
     ]
   }
   return (
-    <div className='w-full min-h-100 slider-container'>
+    <div className='w-full min-h-full slider-container'>
       <Slider {...settings} className='w-full h-full '>
         <PeopleCard />
         <PeopleCard />
