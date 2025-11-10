@@ -2,14 +2,14 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import StudentSignup from "./Components/StudentSignup";
-import LandingPage from "./Components/LandingPage";
+import LandingPage from "./Pages/LandingPage";
 import Role from "./Components/role";
 import AuthPage from "./Components/Login";
 import MentorSignup from "./Components/Mentorsignup";
 import MentorDashboard from "./Components/MentorDashboard";
-import Contact from "./Components/Contact";
-import About from "./Components/About";
-import Chatroom from "./Components/Chatroom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Footer from "./Components/Footer";
 import RecruiterSignup from "./Components/RecruiterSignup";
 import StudentProfile from "./Components/StudentProfile";
 import RecruiterProfile from "./Components/RecruiterProfile";
@@ -20,10 +20,13 @@ import RecruiterDashboard from "./Components/RecruiterDashboard";
 import Messages from "./Components/Messages";
 import Community from "./Components/Community";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import Contact from "./Components/Contact";
+import About from "./Components/About";
+import Chatroom from "./Components/Chatroom";
 
 const App = () => {
   return (
-    <>
+    <div className="relative">
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -50,7 +53,8 @@ const App = () => {
         {/* Community */}
         <Route path="/community" element={<Community />} />
       </Routes>
-    </>
+      <Footer/>
+    </div>
   );
 };
 
