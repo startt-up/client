@@ -1,6 +1,6 @@
 // Navbar.jsx
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,7 +10,21 @@ const Navbar = () => {
   const handleLogin = () => navigate('/login')
   const handleSignUp = () => navigate('/role')
 
-  const menuItems = ['Home', 'Features', 'Community', 'About', 'Contact']
+  const menuItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Features', href: '/features' },
+    // Hash route so it works on Vercel static hosting
+    { label: 'Community', href: '/chatroom' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
+  ]
+
+  // useEffect(() => {
+  //   const onScroll = () => setScrolled(window.scrollY > 8);
+  //   onScroll();
+  //   window.addEventListener("scroll", onScroll);
+  //   return () => window.removeEventListener("scroll", onScroll);
+  // }, []);
 
   return (
     <div className='w-full absolute md:top-8 z-50 flex justify-center'>
@@ -27,13 +41,14 @@ const Navbar = () => {
             {/* Desktop Menu */}
             <div className='hidden md:flex flex-row items-center space-x-8'>
               <ul className='flex space-x-8 text-lg font-medium'>
-                {menuItems.map(item => (
-                  <li
-                    key={item}
+                {menuItems.map((item, index) => (
+                  <Link
+                    key={index}
                     className='cursor-pointer hover:bg-black hover:text-white py-1 px-2 rounded-xl transition-all'
+                    to={item.href}
                   >
-                    {item}
-                  </li>
+                    {item.label}
+                  </Link>
                 ))}
               </ul>
             </div>
@@ -43,7 +58,10 @@ const Navbar = () => {
               <button onClick={handleLogin} className='cursor-pointer font'>
                 Login
               </button>
-              <button onClick={handleSignUp} className='cursor-pointer font bg-gradient-to-r from-purple-600 to-blue-200 py-2 px-3 rounded-full text-white'>
+              <button
+                onClick={handleSignUp}
+                className='cursor-pointer font bg-gradient-to-r from-purple-600 to-blue-200 py-2 px-3 rounded-full text-white'
+              >
                 Sign Up
               </button>
             </div>

@@ -1,12 +1,8 @@
-import React from 'react'
 import Review from '../Components/Review'
-import ConnectBG from '../Components/ConnectBG'
 import Card from '../Components/Card'
 import PersonBG from '../Components/PersonBG'
 import Accordion from '../Components/Accordian'
-import PeopleCard from '../Components/PeopleCard'
 import PeoplesSlider from '../Components/PeoplesSlider'
-import Footer from '../Components/Footer'
 
 const LandingPage = () => {
   const faqs = [

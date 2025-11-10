@@ -1,192 +1,141 @@
-import React from "react";
-import { FaUpload, FaClock, FaCheckCircle } from "react-icons/fa";
-import { FiCalendar, FiClock, FiUser } from "react-icons/fi";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import {
+  MessageCircle, Users, GraduationCap, LogOut, Settings, MessageSquare
+} from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = '/api';
 
 const MentorDashboard = () => {
-  const stats = [
-    { title: "Total Uploads", value: 15, icon: <FaUpload />, color: "text-indigo-600" },
-    { title: "Pending approvals", value: 2, icon: <FaClock />, color: "text-purple-600" },
-    { title: "Approved resources", value: 12, icon: <FaCheckCircle />, color: "text-green-600" },
-  ];
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  const sessions = [
-    {
-      name: "Alex Kumar",
-      topic: "React Hooks Deep Dive",
-      date: "Oct 12, 2025",
-      time: "2:00 PM",
-      duration: "1 hour",
-      status: "Pending",
-    },
-    {
-      name: "Sarah Chen",
-      topic: "System Design Interview Prep",
-      date: "Oct 15, 2025",
-      time: "4:30 PM",
-      duration: "1.5 hours",
-      status: "Pending",
-    },
-    {
-      name: "Mike Johnson",
-      topic: "Career Guidance - Product Manager",
-      date: "Oct 10, 2025",
-      time: "11:00 AM",
-      duration: "45 min",
-      status: "Confirmed",
-    },
-  ];
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    navigate('/');
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full"
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[#F8F9FF] px-8 py-6">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-gray-800">Welcome back, Mentor!</h1>
-        <p className="text-gray-500 text-sm">
-          Here’s an overview of your contributions and sessions.
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 sm:p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">Mentor Dashboard</h1>
+            <p className="text-white/70">Guide students and share your knowledge</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => navigate('/chatroom')}
+              className="px-4 py-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-all flex items-center gap-2"
+            >
+              <MessageSquare size={18} /> Community Chat
+            </button>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 rounded-xl bg-red-500/20 text-red-300 hover:bg-red-500/30 transition-all flex items-center gap-2"
+            >
+              <LogOut size={18} /> Logout
+            </button>
+          </div>
+        </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {stats.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-md rounded-xl flex items-center justify-between px-6 py-5 border border-gray-100"
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20"
           >
-            <div>
-              <p className="text-gray-500 text-sm">{item.title}</p>
-              <h2 className="text-2xl font-bold text-gray-800">{item.value}</h2>
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                <Users className="text-purple-300" size={24} />
+              </div>
+              <span className="text-3xl font-bold text-white">0</span>
             </div>
-            <div className={`text-3xl ${item.color}`}>{item.icon}</div>
-          </div>
-        ))}
-      </div>
+            <h3 className="text-white/80 text-sm font-medium">Students Mentored</h3>
+            <p className="text-white/60 text-xs mt-2">Total students you've helped</p>
+          </motion.div>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* LEFT SIDE (Forms) */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Upload Study Material */}
-          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
-            <h3 className="text-lg font-semibold mb-4">Upload Study Material</h3>
-            <form className="space-y-4">
-              <input
-                type="text"
-                placeholder="eg. Full Stack Developer"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
-              />
-              <textarea
-                rows="3"
-                placeholder="Outline the path"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
-              ></textarea>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <select className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none">
-                  <option value="">Select Subject</option>
-                  <option value="Btech">BTech</option>
-                  <option value="BCA">BCA</option>
-                  <option value="MCA">MCA</option>
-                </select>
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
-                />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                <MessageCircle className="text-blue-300" size={24} />
               </div>
+              <span className="text-3xl font-bold text-white">0</span>
+            </div>
+            <h3 className="text-white/80 text-sm font-medium">Community Posts</h3>
+            <p className="text-white/60 text-xs mt-2">Your contributions</p>
+          </motion.div>
 
-              <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center">
-                <p className="text-gray-500 mb-2">Upload a file or drag and drop</p>
-                <label className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 rounded-md font-medium cursor-pointer hover:bg-indigo-200 transition">
-                  Choose File
-                  <input type="file" className="hidden" />
-                </label>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
+                <GraduationCap className="text-green-300" size={24} />
               </div>
-
-              <button
-                type="submit"
-                className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-medium"
-              >
-                Upload Material
-              </button>
-            </form>
-          </div>
-
-          {/* Propose Road Map */}
-          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
-            <h3 className="text-lg font-semibold mb-4">Propose a Road Map</h3>
-            <form className="space-y-4">
-              <input
-                type="text"
-                placeholder="Roadmap Title (e.g., MERN Stack Journey)"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
-              />
-              <textarea
-                rows="4"
-                placeholder="Write the roadmap outline or key steps here..."
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
-              ></textarea>
-
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="bg-purple-600 text-white px-5 py-2 rounded-lg hover:bg-purple-700 transition font-medium"
-                >
-                  Submit Road Map
-                </button>
-              </div>
-            </form>
-          </div>
+              <span className="text-3xl font-bold text-white">Active</span>
+            </div>
+            <h3 className="text-white/80 text-sm font-medium">Status</h3>
+            <p className="text-white/60 text-xs mt-2">Your availability</p>
+          </motion.div>
         </div>
 
-        {/* RIGHT SIDE (Session Requests) */}
-        <div>
-          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
-            <h3 className="text-lg font-semibold mb-4">Session Requests</h3>
-            <div className="space-y-4">
-              {sessions.map((session, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold text-gray-800">{session.name}</h4>
-                      <p className="text-sm text-gray-500">{session.topic}</p>
-                    </div>
-                    <span
-                      className={`text-xs font-medium px-2 py-1 rounded ${
-                        session.status === "Confirmed"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {session.status}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-sm text-gray-500 mt-2">
-                    <FiCalendar /> {session.date}
-                    <FiClock /> {session.time}
-                    <span>({session.duration})</span>
-                  </div>
-
-                  <div className="flex gap-3 mt-3">
-                    <button className="flex-1 bg-green-100 text-green-700 py-1 rounded hover:bg-green-200">
-                      Accept
-                    </button>
-                    <button className="flex-1 bg-red-100 text-red-700 py-1 rounded hover:bg-red-200">
-                      Decline
-                    </button>
-                    <button className="flex-1 bg-indigo-100 text-indigo-700 py-1 rounded hover:bg-indigo-200">
-                      Start Call
-                    </button>
-                  </div>
-                </div>
-              ))}
+        {/* Community Discussions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <MessageSquare size={24} /> Student Community Discussions
+            </h2>
+            <button
+              onClick={() => navigate('/chatroom')}
+              className="px-4 py-2 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 transition-all flex items-center gap-2"
+            >
+              Join Chat
+            </button>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+              <p className="text-white/60 text-center py-8">
+                Join the community chatroom to engage with students, answer questions, and share your expertise!
+              </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

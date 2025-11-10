@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom'; // for navigation
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+// Use relative path since vite proxy is configured
+const API_URL = 'https://gateway-api-exmk.onrender.com' || '/api'; 
 
 const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate(); // navigation hook
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const togglePassword = () => setShowPassword(!showPassword);
 
@@ -23,18 +27,39 @@ const AuthPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    try {
-      const response = await axios.post("http://localhost:5000/api/mentor/login", {
-        email,
-        password,
-      });
-      console.log(response.data);
-      // navigate('/mentor-dashboard'); // enable when backend login is ready
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
+    setError('');
+
+    // Try all three login endpoints sequentially (using singular form)
+    const loginEndpoints = [
+      { url: `${API_URL}/api/student/login`, role: 'student', redirect: '/student-profile' },
+      { url: `${API_URL}/api/recruiter/login`, role: 'recruiter', redirect: '/recruiter-profile' },
+      { url: `${API_URL}/api/mentor/login`, role: 'mentor', redirect: '/mentor-dashboard' }
+    ];
+
+    for (const endpoint of loginEndpoints) {
+      try {
+        const response = await axios.post(endpoint.url, {
+          email,
+          password,
+        });
+
+        // Store token and user data
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('role', endpoint.role);
+
+        // Navigate based on role
+        navigate(endpoint.redirect);
+        return; // Exit on success
+      } catch (err) {
+        // Continue to next endpoint if this one fails
+        continue;
+      }
     }
+
+    // If all endpoints failed
+    setError('Invalid email or password. Please try again.');
+    setIsSubmitting(false);
   };
 
   return (
@@ -66,6 +91,13 @@ const AuthPage = () => {
 
         <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-1">Welcome back</h2>
         <p className="text-center text-gray-500 mb-6">Sign in to continue your journey</p>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-red-600 text-sm">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form className="space-y-4" onSubmit={handleLogin}>
