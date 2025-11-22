@@ -23,6 +23,8 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
 import Chatroom from "./Components/Chatroom";
+import "slick-carousel/slick/slick.css";
+import Features from "./Components/Features";
 
 const App = () => {
   return (
@@ -30,6 +32,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/features" element={<Features />} />
         <Route path="/role" element={<Role />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/student-signup" element={<StudentSignup />} />
